@@ -34,7 +34,7 @@ class App extends React.Component {
         return (
             <div className="catch-of-the-day">
                 <div className="menu">
-                    <Header tagline="Fresh SeaFood Market"/>
+                    <Header tagline="Fresh Food Market"/>
                     <ul className="list-of-fishes">
                         {
                             Object.keys(this.state.dishes)
