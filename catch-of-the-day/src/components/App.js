@@ -15,6 +15,7 @@ class App extends React.Component {
         }
         this.addDish = this.addDish.bind(this);
         this.loadSamples = this.loadSamples.bind(this);
+        this.addToOrder = this.addToOrder.bind(this);
     }
 
     addDish(dish) {
@@ -30,6 +31,12 @@ class App extends React.Component {
         this.setState({dishes});
     }
 
+    addToOrder(key) {
+        const order = {...this.state.order};
+        order[this.state.dishes[key]] = order[this.state.dishes[key]] + 1 || 1;
+        this.setStates({order});
+    }
+
     render() {
         return (
             <div className="catch-of-the-day">
@@ -38,12 +45,12 @@ class App extends React.Component {
                     <ul className="list-of-fishes">
                         {
                             Object.keys(this.state.dishes)
-                                .map(key => <Dish key={key} details={this.state.dishes[key]}/>)
+                                .map(key => <Dish key={key} index={key} details={this.state.dishes[key]}/>)
                         }
                     </ul>
                 </div>
                 <Order />
-                <Inventory addDish={this.addDish} loadSamples={this.loadSamples}/>
+                <Inventory addDish={this.addDish} loadSamples={this.loadSamples} addToOrder={this.addToOrder}/>
             </div>
         )
     }
