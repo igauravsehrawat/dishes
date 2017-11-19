@@ -33,8 +33,9 @@ class App extends React.Component {
 
     addToOrder(key) {
         const order = {...this.state.order};
+        console.log("add to order", key);
         order[this.state.dishes[key]] = order[this.state.dishes[key]] + 1 || 1;
-        this.setStates({order});
+        this.setState({order});
     }
 
     render() {
@@ -45,12 +46,12 @@ class App extends React.Component {
                     <ul className="list-of-fishes">
                         {
                             Object.keys(this.state.dishes)
-                                .map(key => <Dish key={key} index={key} details={this.state.dishes[key]}/>)
+                                .map(key => <Dish key={key} index={key} details={this.state.dishes[key]} addToOrder={this.addToOrder}/>)
                         }
                     </ul>
                 </div>
-                <Order />
-                <Inventory addDish={this.addDish} loadSamples={this.loadSamples} addToOrder={this.addToOrder}/>
+                <Order dishes={this.state.dishes}/>
+                <Inventory addDish={this.addDish} loadSamples={this.loadSamples}/>
             </div>
         )
     }
