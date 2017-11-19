@@ -34,7 +34,7 @@ class App extends React.Component {
     addToOrder(key) {
         const order = {...this.state.order};
         console.log("add to order", key);
-        order[this.state.dishes[key]] = order[this.state.dishes[key]] + 1 || 1;
+        order[key] = order[key] + 1 || 1;
         this.setState({order});
     }
 

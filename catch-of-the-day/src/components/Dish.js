@@ -3,7 +3,7 @@ import { formatPrice } from '../helpers';
 
 class Dish extends React.Component {
     render() {
-        const { details } = this.props;
+        const { details, index } = this.props;
         const isAvailable = details.status === "available";
         const buttonText = isAvailable ? "Add To Order" : "Sold out";
         return (
@@ -14,7 +14,8 @@ class Dish extends React.Component {
                     <span className="price">{formatPrice(details.price)}</span>
                 </h3>
                 <p>{details.desc}</p>
-                <button disabled={!isAvailable} onClick={this.props.addToOrder}>{buttonText}</button>
+                // how to pass arguments in addToOrder
+                <button disabled={!isAvailable} onClick={() => this.props.addToOrder(index)}>{buttonText}</button>
             </li>
         )
     }
