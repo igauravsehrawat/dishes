@@ -14,7 +14,6 @@ class Dish extends React.Component {
                     <span className="price">{formatPrice(details.price)}</span>
                 </h3>
                 <p>{details.desc}</p>
-                // how to pass arguments in addToOrder
                 <button disabled={!isAvailable} onClick={() => this.props.addToOrder(index)}>{buttonText}</button>
             </li>
         )

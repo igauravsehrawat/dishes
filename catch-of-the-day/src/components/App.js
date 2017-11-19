@@ -19,7 +19,7 @@ class App extends React.Component {
     }
 
     addDish(dish) {
-        // react suggest to maintain a different state
+        // react [suggest] to maintain a different state
         const dishes = {...this.state.dishes};
         const timestamp = Date.now();
         dishes[`dish-${timestamp}`] = dish;
@@ -33,7 +33,6 @@ class App extends React.Component {
 
     addToOrder(key) {
         const order = {...this.state.order};
-        console.log("add to order", key);
         order[key] = order[key] + 1 || 1;
         this.setState({order});
     }
@@ -50,7 +49,7 @@ class App extends React.Component {
                         }
                     </ul>
                 </div>
-                <Order dishes={this.state.dishes}/>
+                <Order dishes={this.state.dishes} order={this.state.order}/>
                 <Inventory addDish={this.addDish} loadSamples={this.loadSamples}/>
             </div>
         )
