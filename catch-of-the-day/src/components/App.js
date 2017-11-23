@@ -2,8 +2,9 @@ import React from 'react';
 import Header from './Header';
 import Order from './Order';
 import Inventory from './Inventory';
-import dishes from '../sample-dishes'
+import dishes from '../sample-dishes';
 import Dish from './Dish';
+import base from '../base';
 
 class App extends React.Component {
     constructor() {
@@ -35,6 +36,17 @@ class App extends React.Component {
         const order = {...this.state.order};
         order[key] = order[key] + 1 || 1;
         this.setState({order});
+    }
+
+    componentWillMount(nextProps, nextState) {
+        this.ref = base.syncState('handsome-sparkling-nuclei', {
+            context: this,
+            state: 'dishes'
+        });
+    }
+
+    componentWillUnmount() {
+        this.removeBindings(this.ref);
     }
 
     render() {
