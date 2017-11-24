@@ -39,7 +39,8 @@ class App extends React.Component {
     }
 
     componentWillMount(nextProps, nextState) {
-        this.ref = base.syncState('handsome-sparkling-nuclei', {
+        console.log(`catch-ofthe-day-igaurav/${this.props.params.storeId}`);
+        this.ref = base.syncState(`catch-of-the-day-igaurav/${this.props.params.storeId}`, {
             context: this,
             state: 'dishes'
         });
