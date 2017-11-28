@@ -38,16 +38,28 @@ class App extends React.Component {
         this.setState({order});
     }
 
-    componentWillMount(nextProps, nextState) {
-        console.log(`catch-ofthe-day-igaurav/${this.props.params.storeId}`);
-        this.ref = base.syncState(`catch-of-the-day-igaurav/${this.props.params.storeId}`, {
+    componentWillMount() {
+        this.ref = base.syncState(`${this.props.params.storeId}/dishes`, {
             context: this,
             state: 'dishes'
         });
+        // Wait for firebase to finish
+        const localStorageRef = localStorage.getItem(`${this.props.params.storeId}`);
+        if (localStorageRef) {
+            this.setState({
+                order: JSON.parse(localStorageRef)
+            });
+            console.log("Getting in localStorageRef", localStorageRef);
+        }
     }
 
     componentWillUnmount() {
         this.removeBindings(this.ref);
+        console.log("In component will Unmount", this.state.dishes);
+    }
+
+    componentWillUpdate(nextProps, nextState) {
+        localStorage.setItem(`${this.props.params.storeId}`, JSON.stringify(nextState.order));
     }
 
     render() {
