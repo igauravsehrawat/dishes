@@ -10,13 +10,38 @@ class App extends React.Component {
     constructor() {
         super();
 
+        this.addDish = this.addDish.bind(this);
+        this.loadSamples = this.loadSamples.bind(this);
+        this.addToOrder = this.addToOrder.bind(this);
+
         this.state = {
             dishes: {},
             order: {}
         }
-        this.addDish = this.addDish.bind(this);
-        this.loadSamples = this.loadSamples.bind(this);
-        this.addToOrder = this.addToOrder.bind(this);
+    }
+
+    componentWillMount() {
+        this.ref = base.syncState(`${this.props.params.storeId}/dishes`, {
+            context: this,
+            state: 'dishes'
+        });
+        // Wait for firebase to finish
+        // const localStorageRef = localStorage.getItem(`${this.props.params.storeId}`);
+        // if (localStorageRef) {
+        //     this.setState({
+        //         order: JSON.parse(localStorageRef)
+        //     });
+        //     console.log("Getting in localStorageRef", localStorageRef);
+        // }
+    }
+
+    componentWillUnmount() {
+        this.removeBindings(this.ref);
+        console.log("In component will Unmount", this.state.dishes);
+    }
+
+    componentWillUpdate(nextProps, nextState) {
+        localStorage.setItem(`${this.props.params.storeId}`, JSON.stringify(nextState.order));
     }
 
     addDish(dish) {
@@ -38,30 +63,6 @@ class App extends React.Component {
         this.setState({order});
     }
 
-    componentWillMount() {
-        this.ref = base.syncState(`${this.props.params.storeId}/dishes`, {
-            context: this,
-            state: 'dishes'
-        });
-        // Wait for firebase to finish
-        const localStorageRef = localStorage.getItem(`${this.props.params.storeId}`);
-        if (localStorageRef) {
-            this.setState({
-                order: JSON.parse(localStorageRef)
-            });
-            console.log("Getting in localStorageRef", localStorageRef);
-        }
-    }
-
-    componentWillUnmount() {
-        this.removeBindings(this.ref);
-        console.log("In component will Unmount", this.state.dishes);
-    }
-
-    componentWillUpdate(nextProps, nextState) {
-        localStorage.setItem(`${this.props.params.storeId}`, JSON.stringify(nextState.order));
-    }
-
     render() {
         return (
             <div className="catch-of-the-day">
@@ -74,7 +75,11 @@ class App extends React.Component {
                         }
                     </ul>
                 </div>
-                <Order dishes={this.state.dishes} order={this.state.order}/>
+                <Order
+                    dishes={this.state.dishes}
+                    order={this.state.order}
+                    params={this.props.params}
+                />
                 <Inventory addDish={this.addDish} loadSamples={this.loadSamples}/>
             </div>
         )

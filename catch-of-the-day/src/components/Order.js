@@ -26,10 +26,6 @@ class Order extends React.Component {
     }
     render() {
         const orderIds = Object.keys(this.props.order);
-        console.log("order ids are here:: ", orderIds);
-        console.log("order is like::", this.props.order);
-        console.log("dishes is like::", this.props.dishes);
-        console.log("dishes in state::", this.state.dishes);
         var total = orderIds.reduce((sum, orderId) => {
             var quantity = this.props.order[orderId];
             var dish = this.props.dishes[orderId];
