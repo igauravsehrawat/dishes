@@ -80,7 +80,11 @@ class App extends React.Component {
                     order={this.state.order}
                     params={this.props.params}
                 />
-                <Inventory addDish={this.addDish} loadSamples={this.loadSamples}/>
+                <Inventory
+                    addDish={this.addDish}
+                    loadSamples={this.loadSamples}
+                    dishes={this.state.dishes}
+                />
             </div>
         )
     }
