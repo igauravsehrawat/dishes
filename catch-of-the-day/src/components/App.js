@@ -13,6 +13,7 @@ class App extends React.Component {
         this.addDish = this.addDish.bind(this);
         this.loadSamples = this.loadSamples.bind(this);
         this.addToOrder = this.addToOrder.bind(this);
+        this.updateDish = this.updateDish.bind(this);
 
         this.state = {
             dishes: {},
@@ -42,6 +43,12 @@ class App extends React.Component {
 
     componentWillUpdate(nextProps, nextState) {
         localStorage.setItem(`${this.props.params.storeId}`, JSON.stringify(nextState.order));
+    }
+
+    updateDish(key, updatedDish) {
+        var dishes = {...this.state.dishes};
+        dishes[key] = updatedDish;
+        this.setState({dishes});
     }
 
     addDish(dish) {
@@ -84,6 +91,7 @@ class App extends React.Component {
                     addDish={this.addDish}
                     loadSamples={this.loadSamples}
                     dishes={this.state.dishes}
+                    updateDish={this.updateDish}
                 />
             </div>
         )
