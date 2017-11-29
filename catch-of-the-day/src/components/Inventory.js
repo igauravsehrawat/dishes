@@ -9,21 +9,29 @@ class Inventory extends React.Component {
     }
 
     handleChange(event) {
-        console.log(event);
+        console.log(event.target);
+        const key = event.target.name;
+        const value = event.target.value;
+        var dishes = {...this.props.dishes};
+        dishes[key] = value;
+        console.log(key, "::", dishes[key]);
+        this.setState({
+            dishes
+        });
     }
 
     renderInventory(id) {
         return(
-            <div key={id}>
-                <input value={this.props.dishes[id].name} type="text" placeholder="Enter name" onchange={this.handleChange} />
-                <input value={this.props.dishes[id].price} type="text" placeholder="Enter price" onchange={this.handleChange} />
-                <select value={this.props.dishes[id.status]} type="text" placeholder="Enter status" onchange={this.handleChange}>
+            <form key={id} className="fish-edit">
+                <input name="name" value={this.props.dishes[id].name} type="text" placeholder="Enter name" onChange={this.handleChange} />
+                <input name="price" value={this.props.dishes[id].price} type="text" placeholder="Enter price" onChange={this.handleChange} />
+                <select name="status" value={this.props.dishes[id.status]} type="text" placeholder="Enter status" onChange={this.handleChange}>
                     <option value="available">Available</option>
                     <option value="unavailable">Unavailable</option>
                 </select>
-                <textarea value={this.props.dishes[id].desc} type="text" placeholder="Enter desc" onchange={this.handleChange} />
-                <input value={this.props.dishes[id].image} type="text" placeholder="Enter image" onchange={this.handleChange} />
-            </div>
+                <textarea name="desc" value={this.props.dishes[id].desc} type="text" placeholder="Enter desc" onChange={this.handleChange} />
+                <input name="image" value={this.props.dishes[id].image} type="text" placeholder="Enter image" onChange={this.handleChange} />
+            </form>
         );
     }
 
