@@ -14,6 +14,7 @@ class App extends React.Component {
         this.loadSamples = this.loadSamples.bind(this);
         this.addToOrder = this.addToOrder.bind(this);
         this.updateDish = this.updateDish.bind(this);
+        this.deleteDish = this.deleteDish.bind(this);
 
         this.state = {
             dishes: {},
@@ -48,6 +49,13 @@ class App extends React.Component {
     updateDish(key, updatedDish) {
         var dishes = {...this.state.dishes};
         dishes[key] = updatedDish;
+        this.setState({dishes});
+    }
+
+    deleteDish(key){
+        var dishes = {...this.state.dishes};
+        console.log({dishes});
+        dishes[key] = null;
         this.setState({dishes});
     }
 
@@ -92,6 +100,7 @@ class App extends React.Component {
                     loadSamples={this.loadSamples}
                     dishes={this.state.dishes}
                     updateDish={this.updateDish}
+                    deleteDish={this.deleteDish}
                 />
             </div>
         )

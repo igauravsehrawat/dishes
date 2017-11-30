@@ -6,6 +6,7 @@ class Inventory extends React.Component {
         super();
         this.renderInventory = this.renderInventory.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.onClick = this.onClick.bind(this);
     }
 
     handleChange(event, key) {
@@ -17,17 +18,23 @@ class Inventory extends React.Component {
         this.props.updateDish(key, updatedDish);
     }
 
-    renderInventory(id) {
+    onClick(event, key) {
+        event.preventDefault();
+        this.props.deleteDish(key);
+    }
+
+    renderInventory(key) {
         return(
-            <form key={id} className="fish-edit">
-                <input name="name" value={this.props.dishes[id].name} type="text" placeholder="Enter name" onChange={(e) => this.handleChange(e, id)} />
-                <input name="price" value={this.props.dishes[id].price} type="text" placeholder="Enter price" onChange={(e) => this.handleChange(e, id)} />
-                <select name="status" value={this.props.dishes[id.status]} type="text" placeholder="Enter status" onChange={(e) => this.handleChange(e, id)}>
+            <form key={key} className="fish-edit">
+                <input name="name" value={this.props.dishes[key].name} type="text" placeholder="Enter name" onChange={(e) => this.handleChange(e, key)} />
+                <input name="price" value={this.props.dishes[key].price} type="text" placeholder="Enter price" onChange={(e) => this.handleChange(e, key)} />
+                <select name="status" value={this.props.dishes[key.status]} type="text" placeholder="Enter status" onChange={(e) => this.handleChange(e, key)}>
                     <option value="available">Available</option>
                     <option value="unavailable">Sold out!</option>
                 </select>
-                <textarea name="desc" value={this.props.dishes[id].desc} type="text" placeholder="Enter desc" onChange={(e) => this.handleChange(e, id)} />
-                <input name="image" value={this.props.dishes[id].image} type="text" placeholder="Enter image" onChange={(e) => this.handleChange(e, id)} />
+                <textarea name="desc" value={this.props.dishes[key].desc} type="text" placeholder="Enter desc" onChange={(e) => this.handleChange(e, key)} />
+                <input name="image" value={this.props.dishes[key].image} type="text" placeholder="Enter image" onChange={(e) => this.handleChange(e, key)} />
+                <button name="delete" onClick={(e) => this.onClick(e, key)}>Delete</button>
             </form>
         );
     }

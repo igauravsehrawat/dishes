@@ -29,10 +29,10 @@ class Order extends React.Component {
         var total = orderIds.reduce((sum, orderId) => {
             var quantity = this.props.order[orderId];
             var dish = this.props.dishes[orderId];
-            var price = dish.price;
-            var value = quantity * price;
-            const isAvailable = dish && dish.status === 'available';
+            const isAvailable = (dish != undefined) && (dish.status === 'available');
             if (isAvailable) {
+                var price = dish.price;
+                var value = quantity * price;
                 return sum + value || 0;
             }
             return sum;
