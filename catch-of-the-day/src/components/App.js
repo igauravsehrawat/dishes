@@ -27,19 +27,16 @@ class App extends React.Component {
             context: this,
             state: 'dishes'
         });
-        // Wait for firebase to finish
-        // const localStorageRef = localStorage.getItem(`${this.props.params.storeId}`);
-        // if (localStorageRef) {
-        //     this.setState({
-        //         order: JSON.parse(localStorageRef)
-        //     });
-        //     console.log("Getting in localStorageRef", localStorageRef);
-        // }
+        const localStorageRef = localStorage.getItem(`${this.props.params.storeId}`);
+        if (localStorageRef) {
+            this.setState({
+                order: JSON.parse(localStorageRef)
+            });
+        }
     }
 
     componentWillUnmount() {
         this.removeBindings(this.ref);
-        console.log("In component will Unmount", this.state.dishes);
     }
 
     componentWillUpdate(nextProps, nextState) {
@@ -54,7 +51,6 @@ class App extends React.Component {
 
     deleteDish(key){
         var dishes = {...this.state.dishes};
-        console.log({dishes});
         dishes[key] = null;
         this.setState({dishes});
     }
