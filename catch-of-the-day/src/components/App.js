@@ -12,7 +12,10 @@ class App extends React.Component {
 
         this.addDish = this.addDish.bind(this);
         this.loadSamples = this.loadSamples.bind(this);
+
         this.addToOrder = this.addToOrder.bind(this);
+        this.removeFromOrder = this.removeFromOrder.bind(this);
+
         this.updateDish = this.updateDish.bind(this);
         this.deleteDish = this.deleteDish.bind(this);
 
@@ -55,6 +58,12 @@ class App extends React.Component {
         this.setState({dishes});
     }
 
+    removeFromOrder(key) {
+        var order = {...this.state.order};
+        delete order[key];
+        this.setState({order});
+    }
+
     addDish(dish) {
         // react [suggest] to maintain a different state
         const dishes = {...this.state.dishes};
@@ -89,6 +98,7 @@ class App extends React.Component {
                 <Order
                     dishes={this.state.dishes}
                     order={this.state.order}
+                    removeFromOrder={this.removeFromOrder}
                     params={this.props.params}
                 />
                 <Inventory

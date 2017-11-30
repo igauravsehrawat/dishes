@@ -10,16 +10,17 @@ class Order extends React.Component {
     renderOrder(key) {
         var dish = this.props.dishes[key];
         var count = this.props.order[key];
+        const removeButton = <button onClick={() => this.props.removeFromOrder(key)}>x</button>;
         if (!dish || dish.status === 'unavailable') {
             return (
                 <li key={key} className="order">
-                Sorry, {dish? dish.name : 'Dish'} is no longer available.
+                Sorry, {dish? dish.name : 'Dish'} is no longer available. {removeButton}
                 </li>
             )
         }
         return (
             <li key={key} className="order">
-                <span>{count} lbs {dish.name}</span>
+                <span>{count} lbs {dish.name} {removeButton}</span>
                 <span className="price">{formatPrice(count*dish.price)}</span>
             </li>
         );
