@@ -32,4 +32,8 @@ class AddDishForm extends React.Component {
     }
 }
 
+AddDishForm.propTypes = {
+    addDish: React.PropTypes.func
+}
+
 export default AddDishForm;

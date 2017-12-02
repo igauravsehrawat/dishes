@@ -20,4 +20,10 @@ class Dish extends React.Component {
     }
 }
 
+Dish.propTypes = {
+    details: React.PropTypes.object,
+    index: React.PropTypes.string,
+    addToDish: React.PropTypes.func
+}
+
 export default Dish;
