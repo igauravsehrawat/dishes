@@ -1,5 +1,6 @@
 import React from 'react';
 import AddDishForm from './AddDishForm';
+import base from '../base';
 
 class Inventory extends React.Component {
     constructor() {
@@ -8,7 +9,13 @@ class Inventory extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.deleteItem = this.deleteItem.bind(this);
         this.renderLogin = this.renderLogin.bind(this);
-        this.state ={
+
+        // authentication
+        this.authenticate = this.authenticate.bind(this);
+        this.authHandler = this.authHandler.bind(this);
+        this.logout = this.logout.bind(this);
+
+        this.state = {
             uid: null,
             owner: null
         }
@@ -28,13 +35,27 @@ class Inventory extends React.Component {
         this.props.deleteDish(key);
     }
 
+    authHandler(err, authData) {
+        console.log("Error", err);
+        console.log("AuthData", authData);
+    }
+
+    authenticate(platform) {
+        console.log(`Trying to log in with {platform}`);
+        base.authWithOAuthPopup(platform, this.authHandler);
+    }
+
+    logout() {
+
+    }
+
     renderLogin() {
         return(
             <div>
                 <h2>Sign in to manage your inventory</h2>
-                <button className="github" onClick={this.authenticate}>Github</button>
-                <button className="facebook" onClick={this.authenticate}>Facebook</button>
-                <button className="twitter" onClick={this.authenticate}>Twitter</button>
+                <button className="github" onClick={() => this.authenticate("github")}>Login in with Github</button>
+                <button className="facebook" onClick={() => this.authenticate("facebook")}>Login in with Facebook</button>
+                <button className="twitter" onClick={() => this.authenticate("twitter")}>Login in with Twitter</button>
             </div>
         )
     }
@@ -57,19 +78,23 @@ class Inventory extends React.Component {
 
     render() {
         const allDishesKey = Object.keys(this.props.dishes);
-/*
-        if(this.state.uid === this.state.owner) {
+        const logout = <button onClick={() => this.logout}>Logout</button>
+        // Check if anyone logged in
+        if(!this.state.uid) {
+            return <div>{this.renderLogin()}</div>
+        }
+
+        if (this.state.uid !== this.state.owner) {
             return(
                 <div>
-                    {this.renderLogin()}
-                <div>
-            );
+                    <p> Sorry you aren't the owner of this store</p>
+                </div>
+            )
         }
-*/
-        return(
 
+        return(
             <div>
-                <p>Inventory</p>
+                <h2>Inventory</h2>
                     {allDishesKey.map((key) => this.renderInventory(key))}
                 <AddDishForm addDish={this.props.addDish}/>
                 <button onClick={this.props.loadSamples}>Load Samples</button>
@@ -84,6 +109,6 @@ Inventory.propTypes = {
     updateDish: React.PropTypes.func.isRequired,
     deleteDish: React.PropTypes.func.isRequired,
     loadSamples: React.PropTypes.func.isRequired
-}
+};
 
 export default Inventory;
