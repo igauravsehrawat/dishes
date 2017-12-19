@@ -38,15 +38,44 @@ class Inventory extends React.Component {
     authHandler(err, authData) {
         console.log("Error", err);
         console.log("AuthData", authData);
+        if (err) {
+            console.log(err);
+            return;
+        }
+
+        const storeRef = base.database().ref(this.props.storeId);
+
+        const data = storeRef.once('value', (snapshot) => {
+            console.log("data", data);
+            // first time login
+            // pass auth credentials.
+            if (!data.owner) {
+                storeRef.set({
+                    owner: authData.user.uid
+                });
+            }
+
+            console.log("state data", {
+                uid: authData.user.uid,
+                owner: data.owner || authData.user.uid
+            });
+            this.setState({
+                uid: authData.user.uid,
+                owner: data.owner || authData.user.uid
+            });
+        });
+
     }
 
     authenticate(platform) {
-        console.log(`Trying to log in with {platform}`);
+        console.log(`Trying to log in with ${platform}`);
         base.authWithOAuthPopup(platform, this.authHandler);
     }
 
     logout() {
-
+        this.setState({
+            uid: null
+        });
     }
 
     renderLogin() {
@@ -88,6 +117,7 @@ class Inventory extends React.Component {
             return(
                 <div>
                     <p> Sorry you aren't the owner of this store</p>
+                    {logout}
                 </div>
             )
         }
