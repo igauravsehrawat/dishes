@@ -21,6 +21,14 @@ class Inventory extends React.Component {
         }
     }
 
+    componentDidMount() {
+        base.onAuth((user) => {
+            if(user) {
+                this.authHandler(null, { user });
+            }
+        });
+    }
+
     handleChange(event, key) {
         const dish = this.props.dishes[key];
         const updatedDish = {
@@ -73,6 +81,8 @@ class Inventory extends React.Component {
     }
 
     logout() {
+        console.log("logging out");
+        base.unauth();
         this.setState({
             uid: null
         });
@@ -107,7 +117,7 @@ class Inventory extends React.Component {
 
     render() {
         const allDishesKey = Object.keys(this.props.dishes);
-        const logout = <button onClick={() => this.logout}>Logout</button>
+        const logout = <button onClick={this.logout}>Logout</button>
         // Check if anyone logged in
         if(!this.state.uid) {
             return <div>{this.renderLogin()}</div>
@@ -125,6 +135,7 @@ class Inventory extends React.Component {
         return(
             <div>
                 <h2>Inventory</h2>
+                    {logout}
                     {allDishesKey.map((key) => this.renderInventory(key))}
                 <AddDishForm addDish={this.props.addDish}/>
                 <button onClick={this.props.loadSamples}>Load Samples</button>
