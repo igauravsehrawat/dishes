@@ -44,29 +44,22 @@ class Inventory extends React.Component {
     }
 
     authHandler(err, authData) {
-        console.log("Error", err);
         console.log("AuthData", authData);
         if (err) {
-            console.log(err);
+            console.error(err);
             return;
         }
 
         const storeRef = base.database().ref(this.props.storeId);
 
-        const data = storeRef.once('value', (snapshot) => {
-            console.log("data", data);
-            // first time login
-            // pass auth credentials.
+        storeRef.once('value', (snapshot) => {
+            const data = snapshot.val() || {};
             if (!data.owner) {
                 storeRef.set({
                     owner: authData.user.uid
                 });
             }
 
-            console.log("state data", {
-                uid: authData.user.uid,
-                owner: data.owner || authData.user.uid
-            });
             this.setState({
                 uid: authData.user.uid,
                 owner: data.owner || authData.user.uid
@@ -90,12 +83,12 @@ class Inventory extends React.Component {
 
     renderLogin() {
         return(
-            <div>
+            <nav className="login">
                 <h2>Sign in to manage your inventory</h2>
                 <button className="github" onClick={() => this.authenticate("github")}>Login in with Github</button>
                 <button className="facebook" onClick={() => this.authenticate("facebook")}>Login in with Facebook</button>
                 <button className="twitter" onClick={() => this.authenticate("twitter")}>Login in with Twitter</button>
-            </div>
+            </nav>
         )
     }
 
