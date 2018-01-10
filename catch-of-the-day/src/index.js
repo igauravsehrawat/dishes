@@ -9,6 +9,7 @@ import './css/style.css';
 import App from './components/App';
 import NotFound from './components/NotFound';
 import StorePicker from './components/StorePicker';
+import Privacy from './components/Privacy';
 
 const Root = () => {
     return (
@@ -17,6 +18,7 @@ const Root = () => {
                 <Match exactly pattern="/" component={StorePicker}/>
                 <Match pattern="/store/:storeId" component={App}/>
                 <Miss component={NotFound} />
+                <Match exactly pattern="/privacy" component={Privacy}/>
             </div>
         </BrowserRouter>
     )
