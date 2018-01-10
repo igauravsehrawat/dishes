@@ -643,3 +643,11 @@ input[type=submit].twitter:after {
   text-align: center;
   font-size: 3rem;
 }
+
+.text-align-center {
+  text-align: center;
+}
+
+.text-align-center p {
+  margin: 0px;
+}
