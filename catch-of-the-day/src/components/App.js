@@ -107,6 +107,7 @@ class App extends React.Component {
                     dishes={this.state.dishes}
                     updateDish={this.updateDish}
                     deleteDish={this.deleteDish}
+                    storeId={this.props.params.storeId}
                 />
             </div>
         )

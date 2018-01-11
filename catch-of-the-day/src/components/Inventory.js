@@ -44,14 +44,12 @@ class Inventory extends React.Component {
     }
 
     authHandler(err, authData) {
-        console.log("AuthData", authData);
         if (err) {
             console.error(err);
             return;
         }
 
         const storeRef = base.database().ref(this.props.storeId);
-
         storeRef.once('value', (snapshot) => {
             const data = snapshot.val() || {};
             if (!data.owner) {
@@ -69,12 +67,10 @@ class Inventory extends React.Component {
     }
 
     authenticate(platform) {
-        console.log(`Trying to log in with ${platform}`);
         base.authWithOAuthPopup(platform, this.authHandler);
     }
 
     logout() {
-        console.log("logging out");
         base.unauth();
         this.setState({
             uid: null
@@ -139,6 +135,7 @@ class Inventory extends React.Component {
 
 Inventory.propTypes = {
     dishes: React.PropTypes.object.isRequired,
+    storeId: React.PropTypes.object.isRequired,
     addDish: React.PropTypes.func.isRequired,
     updateDish: React.PropTypes.func.isRequired,
     deleteDish: React.PropTypes.func.isRequired,
