@@ -135,7 +135,7 @@ class Inventory extends React.Component {
 
 Inventory.propTypes = {
     dishes: React.PropTypes.object.isRequired,
-    storeId: React.PropTypes.object.isRequired,
+    storeId: React.PropTypes.string.isRequired,
     addDish: React.PropTypes.func.isRequired,
     updateDish: React.PropTypes.func.isRequired,
     deleteDish: React.PropTypes.func.isRequired,
